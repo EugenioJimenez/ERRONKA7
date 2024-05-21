@@ -1,0 +1,50 @@
+<?php
+
+$con = mysqli_connect('localhost', 'root', '', 'donbosco_web_orria');
+
+// Check connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+
+$sql = "SELECT IkasleID, Ikasleizena, Ikasleabizena, DATE_FORMAT(JaiotzeData, '%Y-%m-%d') AS JaiotzeData, Herria FROM ikasleak";
+$result = $con->query($sql);
+
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				echo "<tr>";
+				echo "<td>" . htmlspecialchars($row["IkasleID"]) . "</td>";
+				echo "<td>" . htmlspecialchars($row["Ikasleizena"]) . "</td>";
+				echo "<td>" . htmlspecialchars($row["Ikasleabizena"]) . "</td>";
+				echo "<td>" . htmlspecialchars($row["JaiotzeData"]) . "</td>";
+				echo "<td>" . htmlspecialchars($row["Herria"]) . "</td>";
+				echo "</tr>";
+			}
+		} else {
+			echo "<tr><td colspan='5'>No data found</td></tr>";
+		}
+
+        $con->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Database Data</title>
+    <link rel="stylesheet" href="Itxura.css">
+</head>
+<body>
+    <h1>Database Data Display</h1>
+    <table id="studentTable" border="1">
+        <tr>
+            <th>IkasleID</th>
+            <th>Ikasleizena</th>
+            <th>Ikasleabizena</th>
+            <th>Jaiotzedata</th>
+            <th>Herria</th>
+        </tr>
+    </table>
+</body>
+</html>

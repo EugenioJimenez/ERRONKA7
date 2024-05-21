@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ebaluazioa</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0e0e0; /* Darker background color */
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        #logo-container {
+            position: absolute;
+            top: 20px; /* Adjust the top spacing as needed */
+            right: 20px; /* Adjust the right spacing as needed */
+        }
+
+        #logo-container img {
+            max-width: 100px; /* Adjust the maximum width as needed */
+            max-height: 80px; /* Adjust the maximum height as needed */
+        }
+        .Erakutsi {
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ffcc00; /* Keep yellow color */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #F5BA10; /* Keep yellow hover color */
+        }
+
+        div {
+            background-color: #f0f0f0; /* Darker background color */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #4d4d4d; /* Darker text color */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #b3b3b3; /* Darker border color */
+        }
+
+        th {
+            background-color: #ffcc00; /* Keep yellow color */
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #d9d9d9; /* Darker hover color */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="logo-container">
+        <img src="Argazkia/DonBoscoLogo.png" alt="Logo">
+    </div>
+    <div class="Erakutsi">
+        <input type="file" id="fileInput" accept=".xml">
+        <button onclick="displayData()">Erakutsi ebaluazioak</button>
+    </div>
+    <div style="padding: 5%;">
+        <div id="AprobatuakTabla">
+            <h2>Aprobatuak</h2>
+            <table id="AprobatuakXmlTabla">
+                <thead>
+                    <tr id="AprobatutakHeaderRow"></tr>
+                </thead>
+                <tbody id="AprobatuakTablaBody"></tbody>
+            </table>
+        </div>
+        <div id="SuspenditutakTable">
+            <h2>Suspenditutak</h2>
+            <table id="SuspenditutakXmlTabla">
+                <thead>
+                    <tr id="SuspenditutakHeaderRow"></tr>
+                </thead>
+                <tbody id="SuspenditutakTablaBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let xmlData;
+
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const xmlString = event.target.result;
+                xmlData = parseXML(xmlString);
+            };
+
+            reader.readAsText(file);
+        }
+
+        function parseXML(xmlString) {
+            const parser = new DOMParser();
+            return parser.parseFromString(xmlString, 'text/xml');
+        }
+
+        function calculateKalifikazioa(notaValue) {
+            if (notaValue >= 9) {
+                return 'Bikain';
+            } else if (notaValue >= 7) {
+                return 'Oso ongi';
+            } else if (notaValue >= 6) {
+                return 'Ongi';
+            } else if (notaValue >= 5) {
+                return 'Nahiko';
+            } else {
+                return 'Suspendituta';
+            }
+        }
+
+        function populateTable() {
+            const tableHeaders = [];
+            const AprobatuakTabla = document.getElementById('AprobatuakXmlTabla');
+            const AprobatuakHeaderRow = document.getElementById('AprobatuakHeaderRow');
+            const AprobatuakTablaBody = document.getElementById('AprobatuakTablaBody');
+
+            const SuspenditutakTabla = document.getElementById('SuspenditutakXmlTabla');
+            const failedHeaderRow = document.getElementById('SuspenditutakHeaderRow');
+            const failedTableBody = document.getElementById('SuspenditutakTablaBody');
+
+            if (!xmlData || !xmlData.documentElement) {
+                return;
+            }
+
+            // Create table headers using the first element's child nodes
+            const firstElement = xmlData.documentElement.children[0];
+            for (let i = 0; i < firstElement.childNodes.length; i++) {
+                if (firstElement.childNodes[i].nodeType === Node.ELEMENT_NODE) {
+                    tableHeaders.push(firstElement.childNodes[i].nodeName);
+                }
+            }
+
+            // Add 'Kalifikazioak' and 'Nota' to table headers
+            tableHeaders.push('Nota', 'Kalifikazioak');
+
+            // Display headers for passed table
+            AprobatutakHeaderRow.innerHTML = '';
+            tableHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                AprobatutakHeaderRow.appendChild(th);
+            });
+
+            // Display headers for failed table
+            SuspenditutakHeaderRow.innerHTML = '';
+            tableHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                SuspenditutakHeaderRow.appendChild(th);
+            });
+
+            // Create an array to store XML elements for sorting
+            const elementsArray = Array.from(xmlData.documentElement.children);
+
+            // Sort the array based on the value 'Nota' in descending order
+            elementsArray.sort((a, b) => {
+                const notaA = parseInt(a.querySelector('nota').textContent);
+                const notaB = parseInt(b.querySelector('nota').textContent);
+                return notaB - notaA; // Sort in descending order
+            });
+
+            // Clear table bodies
+            AprobatuakTablaBody.innerHTML = '';
+            SuspenditutakTablaBody.innerHTML = '';
+
+            // Create tables with provided data
+            elementsArray.forEach(element => {
+                const row = document.createElement('tr');
+                tableHeaders.forEach(header => {
+                    const td = document.createElement('td');
+                    if (header !== 'Kalifikazioak' && header !== 'Nota') {
+                        // Check if the header is 'ikasle'
+                        if (header === 'ikasleak') {
+                            
+                            const nanValue = element.querySelector('nan').textContent;
+                            td.textContent = nanValue;
+                        } else {
+                            // Display other values as usual
+                            td.textContent = element.querySelector(header).textContent;
+                        }
+                    } else if (header === 'Nota') {
+                        // Display the 'nota' value
+						const notaValue = element.querySelector('nota').textContent;
+                        td.textContent = notaValue;
+                    } else {
+                        // Handle the 'Kalifikazioak' column
+                        const notaValue = parseInt(element.querySelector('nota').textContent);
+                        const kalifikazioaValue = calculateKalifikazioa(notaValue);
+                        td.textContent = kalifikazioaValue;
+                    }
+                    row.appendChild(td);
+                });
+
+                const kalifikazioaValue = calculateKalifikazioa(parseInt(element.querySelector('nota').textContent));
+                if (kalifikazioaValue === 'Bikain' || kalifikazioaValue === 'Oso ongi' || kalifikazioaValue === 'Ongi' || kalifikazioaValue === 'Nahiko') {
+                    AprobatuakTablaBody.appendChild(row);
+                } else {
+                    SuspenditutakTablaBody.appendChild(row);
+                }
+            });
+        }
+
+        function displayData() {
+            populateTable();
+        }
+    </script>
+
+</body>
+
+</html>
+
+

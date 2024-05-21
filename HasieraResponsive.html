@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ikasle Alta</title>
+    <link rel="stylesheet" href="Itxura.css">
+
+    <style>
+        /* Add your responsive CSS styles here */
+        body {
+            font-family: 'Arial', sans-serif; /* Specify a fallback font family */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        .CR7 {
+            width: 100%;
+            background-color: #f2f2f2; /* Set a background color for better visibility */
+        }
+
+        .Top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .titulo {
+            margin: 0;
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .Horizontal {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .Menu {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .Submenu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .Menu:hover .Submenu {
+            display: block;
+        }
+
+        .Submenu a {
+            color: black;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .IF {
+            width: 100%;
+            height: 80vh; /* Adjust the height as needed */
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .Sareak {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .Sozial {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .SareSozialak {
+            margin: 0;
+        }
+
+        .Txikia {
+            max-width: 30px;
+            height: auto;
+            margin: 0 10px;
+        }
+
+        .Copy {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="CR7">
+        <div class="Top">
+            <h1 class="titulo">DON BOSCO</h1>
+            <img class="logo" src="Argazkia/DonBoscoLogo.png" alt="Don Bosco Logo">
+        </div>
+        <div class="Horizontal">
+            <button class="Menu"><a href="Hasiera2.html" target="ABC">Hasiera</a></button>
+        </div>
+        <div class="Horizontal">
+            <button class="Menu">Ikasle</button>
+            <div class="Submenu">
+                <a href="IkasleAlta.html" target="ABC">Ikasle Alta</a>
+                <a href="IkasleZerrenda.html" target="ABC">Ikasle Zerrenda</a>
+            </div>
+        </div>
+        <div class="Horizontal">
+            <button class="Menu">Irakasle</button>
+            <div class="Submenu">
+                <a href="IrakasleAlta.html" target="ABC">Irakasle alta eta tabla</a>
+                <a href="#">Irakasle zerrenda</a>
+            </div>
+        </div>
+        <div class="Horizontal">
+            <button class="Menu">Moduloak</button>
+            <div class="Submenu">
+                <a href="#">Modulo alta eta tabla</a>
+                <a href="#">Moduloen zerrenda</a>
+            </div>
+        </div>
+        <div class="Horizontal">
+            <button class="Menu">Ebaluazioa</button>
+        </div>
+    </div>
+    <div class="IF">
+        <iframe src="Hasiera2.html" name="ABC"></iframe>
+    </div>
+    <div class="Sareak">
+        <footer>
+            <ul class="Sozial">
+                <h2 class="SareSozialak">SARE SOZIALAK</h2>
+                <li>
+                    <a href="https://www.instagram.com/fpdonboscolh/">
+                        <img class="Txikia" src="Argazkia/Instagram.png" alt="Instagram logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/FPdonboscoLH">
+                        <img class="Txikia" src="Argazkia/Twitter.png" alt="Twitter logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/channel/UCOs7j2eRzfXbFgBOOs1-9TQ">
+                        <img class="Txikia" src="Argazkia/Youtube.png" alt="Youtube logo">
+                    </a>
+                </li>
+            </ul>
+            <div class="Copy">
+                <h3>&copy; Eugenio Jimenez</h3>
+            </div>
+        </footer>
+	</div>
+</body>
+</html>

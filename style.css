@@ -1,0 +1,363 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+	height:90vh;
+	margin-top: 3vh;
+}
+
+h1 {
+    color: #FFD733;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 4em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#studentTable {
+    width: 100%; /* Ensure the table spans the full width of its container */
+    table-layout: fixed; /* Fix the table layout to prevent column widths from changing */
+	border: 1px solid transparent;
+}
+
+
+#studentTable th, #studentTable td {
+    padding: 20px;
+    text-align: left;
+    border: 1px solid transparent;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#studentTable th {
+	position: sticky;
+	top:0;
+	z-index: 2;
+    background-color: #FFD733;
+    color: white;
+    border-radius: 12px 0 0 0;
+}
+
+#studentTable tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+#studentTable tr:hover {
+    background-color: #d5d8dc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#studentTable2 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top:10vh;
+	margin-left:5vh;
+	margin-right:5vh;
+}
+
+#studentTable2 th, #studentTable2 td {
+    padding: 20px;
+    text-align: left;
+    border: 1px solid #ecf0f1;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+#studentTable2 th {
+	position: sticky;
+	top:0;
+	z-index: 2;
+    background-color: #FFD733;
+    color: white;
+    border-radius: 12px 0 0 0;
+}
+
+
+#studentTable2 tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+#studentTable2 tr:hover {
+    background-color: #d5d8dc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.update-form, .update-form2 {
+    max-width: 600px;
+    margin: 50px auto; /* Adjusted margin */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    text-align: center;
+    transition: box-shadow 0.3s;
+    margin-bottom: 20px;
+}
+
+.update-form label, .update-form2 label {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 15px; /* Adjusted margin-bottom */
+    color: #FFD733;
+}
+
+.update-form input, .update-form select, .update-form2 input, .update-form2 select {
+    width: calc(100% - 40px); /* Adjusted width */
+    padding: 15px; /* Adjusted padding */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ecf0f1;
+    border-radius: 12px;
+    font-size: 20px;
+    transition: border-color 0.3s;
+}
+
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Adjust the appearance of buttons in both forms */
+.update-form .submit-button, .update-form .delete-button,
+.update-form2 .submit-button, .update-form2 .delete-button {
+    padding: 15px 24px; /* Adjusted padding for smaller buttons */
+}
+
+.update-form:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional Styles for More Elegance */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #FFD733, #FFA533);
+    opacity: 0.3;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    height: 4px;
+    width: 50%;
+    margin: 15px auto;
+    background-color: #FFD733;
+}
+
+/* Smooth transition for form elements */
+.update-form input:focus, .update-form select:focus {
+    border-color: #FFD733;
+}
+
+body::-webkit-scrollbar,
+#studentTable::-webkit-scrollbar,
+.BichoLover::-webkit-scrollbar {
+    width: 16px;
+}
+body::-webkit-scrollbar-thumb,
+#studentTable::-webkit-scrollbar-thumb,
+.BichoLover::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #FF5733, #FFD700); /* Gradient background with red and yellow shades */
+    border-radius: 12px;
+    border: 4px solid #f8f8f8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+#studentTable::-webkit-scrollbar-thumb:hover,
+.BichoLover::-webkit-scrollbar-thumb:hover  {
+    background: linear-gradient(45deg, #FF6347, #FFEC8B); /* Adjusted hover gradient with different shades */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+body::-webkit-scrollbar-thumb:active,
+#studentTable::-webkit-scrollbar-thumb:active,
+.BichoLover::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(45deg, #FF4500, #FFD700); /* Adjusted active gradient with different shades */
+}
+
+body::-webkit-scrollbar-track,
+#studentTable::-webkit-scrollbar-track,
+.BichoLover::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+    border-radius: 14px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+body::-webkit-scrollbar-corner,
+#studentTable::-webkit-scrollbar-corner {
+    background-color: #ecf0f1;
+}
+
+/* New effects */
+body::-webkit-scrollbar-thumb:before,
+#studentTable::-webkit-scrollbar-thumb:before,
+.BichoLover::-webkit-scrollbar-thumb:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, #FF5733, transparent); /* Adjusted gradient */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+body::-webkit-scrollbar-thumb:after,
+#studentTable::-webkit-scrollbar-thumb:after,
+.BichoLover::-webkit-scrollbar-thumb:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, #FF5733, transparent); /* Adjusted gradient */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+body::-webkit-scrollbar-thumb:hover:before,
+body::-webkit-scrollbar-thumb:hover:after,
+#studentTable::-webkit-scrollbar-thumb:hover:before,
+#studentTable::-webkit-scrollbar-thumb:hover:after,
+.BichoLover::-webkit-scrollbar-thumb:hover:before,
+.BichoLover::-webkit-scrollbar-thumb:hover:after
+ {
+    background: linear-gradient(to bottom, #FF6347, transparent); /* Adjusted hover gradient */
+}
+
+body::-webkit-scrollbar-thumb:before,
+#studentTable::-webkit-scrollbar-thumb:before,
+.BichoLover::-webkit-scrollbar-thumb:before {
+    transform: scaleY(0.9);
+}
+
+body::-webkit-scrollbar-thumb:after,
+#studentTable::-webkit-scrollbar-thumb:after,
+.BichoLover::-webkit-scrollbar:after {
+    transform: scaleY(0.9);
+}
+
+
+
+@keyframes pulse {
+    to {
+        transform: scale(1.4);
+    }
+}
+
+/* Additional enhancements for more beauty */
+body {
+    line-height: 1.8;
+}
+
+h1 {
+    letter-spacing: 3px;
+}
+
+.update-form input,
+.update-form select {
+    outline: none;
+}
+
+
+
+/* Hover effect for table rows */
+#studentTable tr:hover td {
+    background-color: #d5d8dc !important;
+}
+
+/* Smooth transition for table cells */
+#studentTable td {
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect for table rows */
+#studentTable2 tr:hover td {
+    background-color: #d5d8dc !important;
+}
+
+/* Smooth transition for table cells */
+#studentTable2 td {
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+
+.BichoLover {
+    max-height: 70vh; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    margin: 0 auto; /* Center the container horizontally */
+    width: 100%;
+	border-collapse: collapse;
+}
+
+.submit-button, .delete-button {
+    background-color: #FFD733;
+    color: white;
+    padding: 20px 32px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Adjusted styling for both buttons */
+.submit-button, .delete-button,
+.update-form .submit-button, .update-form .delete-button,
+.update-form2 .submit-button, .update-form2 .delete-button {
+    padding: 15px 24px; /* Adjusted padding for smaller buttons */
+    display: inline-block; /* Ensures buttons occupy only necessary width */
+}
+
+/* Hover effect for both buttons */
+.submit-button:hover::after, .delete-button:hover::after,
+.update-form .submit-button:hover::after, .update-form .delete-button:hover::after,
+.update-form2 .submit-button:hover::after, .update-form2 .delete-button:hover::after {
+    content: "\2022";
+    display: inline-block;
+    margin-left: 8px;
+    color: #ffffff;
+    animation: pulse 1s infinite;
+}
+
+/* Centering buttons */
+.update-form .submit-button, .update-form .delete-button,
+.update-form2 .submit-button, .update-form2 .delete-button {
+    margin: 0 auto; /* Center the buttons horizontally */
+    text-align: center; /* Center the text inside the buttons */
+    width: auto; /* Allow the buttons to adjust their width based on content */
+}
+
+
+/* Hover effect for both buttons */
+.submit-button:hover, .delete-button:hover,
+.update-form .submit-button:hover, .update-form .delete-button:hover,
+.update-form2 .submit-button:hover, .update-form2 .delete-button:hover {
+    background-color: #C2B20D;
+}

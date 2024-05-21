@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Karaktere multzorako eta ikusmenerako metadatuak -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Web orriaren izenburua -->
+    <title>Ikasle Alta</title>
+	<!-- Kanpoko estilo-orrira estekatzea -->
+    <link rel="stylesheet" href="Itxura.css">
+</head>
+
+<body>
+	<!-- Ikasleen goiburu-atala -->
+    <div class="IkasleTop">
+        <h1>Modulo Alta</h1>
+        <h3>Moduloaren datuak aukeratu:</h3>
+    </div>
+	<!-- Edukiaren edukiontzi nagusia -->
+    <div class="container">
+		<!-- Datuak sartzeko formularioa -->
+        <form id="myForm">
+            <label for="ModuloZbk">Modulo Zenbakia:</label>
+            <input type="text" id="ModuloZbk" name="ModuloZbk" placeholder="Zure Modulo Zenbakia...">
+            <br>
+			<!-- Menua aukeratzeko datua --> 
+            <label for="ModuloIzena">Modulo Izena:</label>
+            <select id="ModuloIzena" name="ModuloIzena">
+                <option disabled selected hidden>Aukeratu moduloa</option> <!-- Desgaitua -->
+                <option value="Ibilgailuen egiturak">Ibilgailuen egiturak</option>
+                <option value="Motor termikoak eta sistema osagarriak">Motor termikoak eta sistema osagarriak</option>
+                <option value="Ingeles teknikoa">Ingeles teknikoa</option>
+            </select>
+            <br>
+			<!-- Menua aukeratzeko datua -->
+            <label for="ModuloOrduak">Modulo Orduak:</label>
+            <select id="ModuloOrduak" name="ModuloOrduak">
+                <option disabled selected hidden>AukeratuOrduak</option> <!-- Desgaitua-->
+                <option value="132 ordu">132 ordu</option>
+                <option value="231 ordu">231 ordu</option>
+                <option value="40 ordu">40 ordu</option>
+            </select>
+            <br>
+			<!-- XML datuak gorde eta deskargatzeko botoiak -->
+            <input type="button" value="XML bidali" onclick="guardarDatos()">
+            <input type="button" value="XML deskargatu" onclick="descargarDatos()">
+        </form>
+    </div>
+	<!-- Gorde diren moduluaren datuak erakusteko taula -->
+    <div class="IrakasleTabla">
+        <table id="datosTable" border="1">
+            <tr>
+                <th>Modulo Zenbakia</th>
+                <th>Modulo Izena</th>
+                <th>Modulo Orduak</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+		// Arreglo para almacenar datos del módulo guardados
+        var datosGuardados = [];
+		
+		// Función para guardar datos del módulo
+        function guardarDatos() {
+			// Obtener valores de los campos del formulario
+            var moduloZbk = document.getElementById('ModuloZbk').value;
+            var moduloIzena = document.getElementById('ModuloIzena').value;
+            var moduloOrduak = document.getElementById('ModuloOrduak').value;
+			
+			// Verificar si todos los campos están completos
+            if (moduloZbk && moduloIzena && moduloOrduak) {
+                var nuevoDato = {
+                    ModuloZbk: moduloZbk,
+                    ModuloIzena: moduloIzena,
+                    ModuloOrduak: moduloOrduak
+                };
+				// Agregar los nuevos datos al arreglo
+                datosGuardados.push(nuevoDato);
+
+                // Limpia los campos después de dar a guardar
+                document.getElementById('ModuloZbk').value = '';
+                document.getElementById('ModuloIzena').value = '';
+                document.getElementById('ModuloOrduak').value = '';
+                alert('Dato guardado correctamente.');
+
+                // Actualizar la tabla
+                actualizarTabla();
+            } else {
+                alert('Completa todos los campos antes de guardar.');
+            }
+        }
+		// Función para actualizar la visualización de la tabla
+        function actualizarTabla() {
+            var table = document.getElementById('datosTable');
+
+            // Borra lo que hay en tabla
+            table.innerHTML = '<tr><th>Modulo Zenbakia</th><th>Modulo Izena</th><th>Modulo Orduak</th></tr>';
+
+            // Agregar filas con los datos guardados
+            datosGuardados.forEach(function (dato) {
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.textContent = dato.ModuloZbk;
+                cell2.textContent = dato.ModuloIzena;
+                cell3.textContent = dato.ModuloOrduak;
+            });
+        }
+		// Función para descargar los datos guardados como XML
+        function descargarDatos() {
+            if (datosGuardados.length > 0) {
+				// Construir contenido XML
+                var xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n<datos>\n';
+
+                datosGuardados.forEach(function (dato) {
+                    xmlContent += '  <modulo>\n';
+                    xmlContent += '    <ModuloZbk>' + dato.ModuloZbk + '</ModuloZbk>\n';
+                    xmlContent += '    <ModuloIzena>' + dato.ModuloIzena + '</ModuloIzena>\n';
+                    xmlContent += '    <ModuloOrduak>' + dato.ModuloOrduak + '</ModuloOrduak>\n';
+                    xmlContent += '  </modulo>\n';
+                });
+
+                xmlContent += '</datos>';
+				// Crear un Blob y un enlace para iniciar la descarga
+                var blob = new Blob([xmlContent], { type: 'application/xml' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'ModuloAlta.xml';
+                link.click();
+            } else {
+                alert('No hay datos para descargar.');
+            }
+        }
+    </script>
+</body>
+</html>
+

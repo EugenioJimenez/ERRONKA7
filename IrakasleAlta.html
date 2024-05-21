@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irakasle Alta</title>
+    <link rel="stylesheet" href="Itxura.css">
+</head>
+
+<body>
+    <div class="IkasleTop">
+        <h1>Irakasle Alta</h1>
+        <h3>Irakasle datuak sartu:</h3>
+    </div>
+    <div class="container">
+        <form id="myForm">
+            <label for="NAN">NAN:</label>
+            <input type="text" id="nan" name="nan" placeholder="Zure NAN...">
+            <br>
+            <label for="Izena">Izena:</label>
+            <input type="text" id="izena" name="izena" placeholder="Zure izena...">
+            <br>
+            <label for="Abizena">Abizenak:</label>
+            <input type="text" id="abizena" name="abizena" placeholder="Zure abizena...">
+            <br>
+            <label for="jaiotzedata">Jaiotze Data:</label>
+            <input type="date" id="jaiotzedata" name="jaiotzedata"><br>
+            <label for="Herria">Herria:</label>
+            <input type="text" id="herria" name="herria" placeholder="Zure herria..."><br>
+            <p>Sexua:</p>
+            <label for="gizonezkoa">Gizonezkoa</label>
+            <input type="radio" id="gizonezkoa" name="sexua" value="Gizonezkoa"><br>
+            <label for="emakumezkoa">Emakumezkoa</label>
+            <input type="radio" id="emakumezkoa" name="sexua" value="Emakumezkoa"><br>
+            <label for="definitugabe">Definitu Gabea</label>
+            <input type="radio" id="definitugabe" name="sexua" value="DefinituGabea"><br><br>
+			<label for="Telefonoa">Telefonoa:</label>
+            <input type="tel" id="Telefonoa" name="telefonoa" placeholder="Zure telefonoa..."><br>
+            <label for="emails">Helbidea:</label>
+            <input type="email" id="emails" name="emails" multiple placeholder="Zure korreo elektronikoa...">
+
+            <input type="button" value="XML bidali" onclick="guardarDatos()">
+            <input type="button" value="XML deskargatu" onclick="descargarDatos()">
+        </form>
+    </div>
+    <div class="IrakasleTabla">
+        <table id="datosTable" border="1">
+            <tr>
+                <th>NAN</th>
+                <th>Izena</th>
+                <th>Abizena</th>
+                <th>Sexua</th>
+				<th>Helbidea</th>
+				<th>Telefonoa</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+		// Arreglo para almacenar los datos guardados
+        var datosGuardados = [];
+		
+		// Función para guardar los datos ingresados en el formulario
+        function guardarDatos() {
+            var nan = document.getElementById('nan').value;
+            var izena = document.getElementById('izena').value;
+            var abizena = document.getElementById('abizena').value;
+            var sexua = document.querySelector('input[name="sexua"]:checked').value;
+			var telefonoa = document.getElementById('Telefonoa').value;
+			var emails = document.getElementById('emails').value;
+			
+            if (nan && izena && abizena && sexua) {
+				// Crear un nuevo objeto con los datos ingresados
+                var nuevoDato = {
+                    nan: nan,
+                    izena: izena,
+                    abizena: abizena,
+                    sexua: sexua,
+					telefonoa: telefonoa,
+					emails: emails
+                };
+				// Agregar el nuevo dato al arreglo
+                datosGuardados.push(nuevoDato);
+
+                // Limpia los campos después de dar a guardar
+                document.getElementById('nan').value = '';
+                document.getElementById('izena').value = '';
+                document.getElementById('abizena').value = '';
+                document.querySelector('input[name="sexua"]:checked').checked = false; // reiniciar a la opción por defecto
+				document.getElementById('Telefonoa').value = '';
+				document.getElementById('emails').value = '';
+                alert('Dato guardado correctamente.');
+
+                // Actualiza la tabla
+                actualizarTabla();
+            } else {
+                alert('Completa todos los campos antes de guardar.');
+            }
+        }
+		
+		// Función para actualizar la tabla con los datos guardados
+        function actualizarTabla() {
+            var table = document.getElementById('datosTable');
+
+            // Borra lo que hay en tabla
+            table.innerHTML = '<tr><th>NAN</th><th>Izena</th><th>Abizena</th><th>Sexua</th><th>Helbidea</th><th>Telefonoa</th></tr>';
+
+            // Iterar sobre los datos guardados y agregar filas a la tabla
+            datosGuardados.forEach(function (dato) {
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+				var cell6 = row.insertCell(5);
+
+                cell1.textContent = dato.nan;
+                cell2.textContent = dato.izena;
+                cell3.textContent = dato.abizena;
+                cell4.textContent = dato.sexua;
+				cell5.textContent = dato.emails;
+				cell6.textContent = dato.telefonoa
+            });
+        }
+		
+		// Función para descargar los datos en formato XML
+        function descargarDatos() {
+            if (datosGuardados.length > 0) {
+				// Crear el contenido XML con los datos guardados
+                var xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n<datos>\n';
+
+                datosGuardados.forEach(function (dato) {
+                    xmlContent += '  <irakasle>\n';
+                    xmlContent += '    <nan>' + dato.nan + '</nan>\n';
+                    xmlContent += '    <izena>' + dato.izena + '</izena>\n';
+                    xmlContent += '    <abizena>' + dato.abizena + '</abizena>\n';
+                    xmlContent += '    <sexua>' + dato.sexua + '</sexua>\n';
+					xmlContent += '    <telefonoa>' + dato.telefonoa + '</telefonoa>\n';
+					xmlContent += '    <emails>' + dato.emails + '</emails>\n';
+                    xmlContent += '  </irakasle>\n';
+                });
+
+                xmlContent += '</datos>';
+
+                var blob = new Blob([xmlContent], { type: 'application/xml' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'IrakasleAlta.xml';
+                link.click();
+            } else {
+                alert('No hay datos para descargar.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?php
+$con = mysqli_connect('localhost', 'root', '', 'donbosco_web_orria');
+
+// Check connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT IrakasleID, Irakasleizena, Irakasleabizena, DATE_FORMAT(JaiotzeData, '%Y-%m-%d') AS JaiotzeData, Herria FROM irakasleak";
+$result = $con->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Database Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Ikasle Zerrenda</h1>
+    <table id="studentTable" border="1">
+        <tr>
+            <th>IrakasleID</th>
+            <th>Irakasleizena</th>
+            <th>Irakasleabizena</th>
+            <th>Jaiotzedata</th>
+            <th>Herria</th>
+        </tr>
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["IrakasleID"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["Irakasleizena"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["Irakasleabizena"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["JaiotzeData"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["Herria"]) . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5'>No data found</td></tr>";
+        }
+        $con->close();
+        ?>
+    </table>
+</body>
+</html>

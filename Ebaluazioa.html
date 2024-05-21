@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select XML Files</title>
+</head>
+
+<body>
+    <h1>Ebaluazioa</h1>
+
+    <form id="xmlForm1">
+        <label for="xmlFile1">Aukeratu IkasleAlta XML fitxategia:</label>
+        <input type="file" id="xmlFile1" name="xmlFile1" accept=".xml" onchange="populateIkasleSelect()">
+    </form>
+
+    <label for="xmlData1">Ikaslearen Izena:</label>
+    <select id="xmlData1" name="xmlData1"></select>
+
+    <form id="xmlForm2">
+        <label for="xmlFile2">Aukeratu ModuloAlta XML fitxategia:</label>
+        <input type="file" id="xmlFile2" name="xmlFile2" accept=".xml" onchange="populateModuloSelect()">
+    </form>
+
+    <label for="xmlData2">Moduluaren Izena:</label>
+    <select id="xmlData2" name="xmlData2"></select>
+
+    <h3>Idatzi Nota eta Faltak</h3>
+    <label for="notaInput">Nota:</label>
+    <input type="number" id="notaInput" name="notaInput" min="0" max="10">
+    <label for="faltakInput">Falta/k:</label>
+    <input type="number" id="faltakInput" name="faltakInput" min="0" max="200">
+    <br>
+    <!-- Two buttons: one for saving locally and the other for downloading -->
+    <button onclick="saveEbaluazioaLocally()">Gorde Ebaluazioa Lokalki</button>
+    <button onclick="downloadEbaluazioa()">Deskargatu Ebaluazioa</button>
+
+    <script>
+        var ebaluazioaXML = ''; // Variable to store the generated XML content
+
+        function populateIkasleSelect() {
+            var fileInput = document.getElementById('xmlFile1');
+            var file = fileInput.files[0];
+
+            if (file && file.name.toLowerCase().includes('ikaslealta') && file.name.toLowerCase().endsWith('.xml')) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var xmlContent = e.target.result;
+                    populateSelect('xmlData1', xmlContent);
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please select a valid IkasleAlta XML file.');
+            }
+        }
+
+        function populateModuloSelect() {
+            var fileInput = document.getElementById('xmlFile2');
+            var file = fileInput.files[0];
+
+            if (file && file.name.toLowerCase().includes('moduloalta') && file.name.toLowerCase().endsWith('.xml')) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var xmlContent = e.target.result;
+                    populateSelect('xmlData2', xmlContent);
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please select a valid ModuloAlta XML file.');
+            }
+        }
+
+        function populateSelect(selectId, xmlContent) {
+            var selectElement = document.getElementById(selectId);
+            selectElement.innerHTML = '';
+
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+            var items = xmlDoc.querySelectorAll('modulo, ikasle');
+
+            items.forEach(function (item) {
+                var option = document.createElement('option');
+                option.value = item.querySelector('ModuloIzena, izena').textContent;
+                option.textContent = option.value;
+                selectElement.appendChild(option);
+            });
+        }
+
+        function saveEbaluazioaLocally() {
+            var notaInputValue = document.getElementById('notaInput').value;
+            var faltakInputValue = document.getElementById('faltakInput').value;
+
+            var xmlData1Select = document.getElementById('xmlData1');
+            var selectedIkasle = xmlData1Select.options[xmlData1Select.selectedIndex].text;
+
+            var xmlData2Select = document.getElementById('xmlData2');
+            var selectedModulo = xmlData2Select.options[xmlData2Select.selectedIndex].text;
+
+            var nanValue = '';
+            var moduloOrduakValue = '';
+            var abizenaValue = '';
+            var emailsValue = '';
+            var jaiotzedataValue = '';
+            var sexuaValue = '';
+            var telefonoaValue = '';
+            var moduloZbkValue = '';
+
+            var filesLoaded = 0;
+
+            function fileLoaded() {
+                filesLoaded++;
+                if (filesLoaded === 2) {
+                    continueProcessing();
+                }
+            }
+
+            var file1 = document.getElementById('xmlFile1').files[0];
+
+            if (file1) {
+                var reader1 = new FileReader();
+                reader1.onload = function (e) {
+                    var xmlContent1 = e.target.result;
+                    var parser1 = new DOMParser();
+                    var xmlDoc1 = parser1.parseFromString(xmlContent1, 'text/xml');
+                    nanValue = xmlDoc1.querySelector('ikasle nan').textContent;
+                    abizenaValue = xmlDoc1.querySelector('ikasle abizena').textContent;
+                    emailsValue = xmlDoc1.querySelector('ikasle emails').textContent;
+                    jaiotzedataValue = xmlDoc1.querySelector('ikasle jaiotzedata').textContent;
+                    sexuaValue = xmlDoc1.querySelector('ikasle sexua').textContent;
+                    telefonoaValue = xmlDoc1.querySelector('ikasle telefonoa').textContent;
+                    fileLoaded();
+                };
+                reader1.readAsText(file1);
+            }
+
+            var file2 = document.getElementById('xmlFile2').files[0];
+
+            if (file2) {
+                var reader2 = new FileReader();
+                reader2.onload = function (e) {
+                    var xmlContent2 = e.target.result;
+                    var parser2 = new DOMParser();
+                    var xmlDoc2 = parser2.parseFromString(xmlContent2, 'text/xml');
+                    moduloOrduakValue = xmlDoc2.querySelector('modulo ModuloOrduak').textContent;
+                    moduloZbkValue = xmlDoc2.querySelector('modulo ModuloZbk').textContent;
+                    fileLoaded();
+                };
+                reader2.readAsText(file2);
+            }
+
+            function continueProcessing() {
+                var newXmlDoc = document.implementation.createDocument(null, 'zikloa', null);
+
+                var moduloElement = newXmlDoc.createElement('modulo');
+                var moduloZbkElement = newXmlDoc.createElement('ModuloZbk');
+                moduloZbkElement.textContent = moduloZbkValue;
+                var moduloIzenaElement = newXmlDoc.createElement('ModuloIzena');
+                moduloIzenaElement.textContent = selectedModulo;
+                var moduloOrduakElement = newXmlDoc.createElement('ModuloOrduak');
+                moduloOrduakElement.textContent = moduloOrduakValue;
+
+                moduloElement.appendChild(moduloZbkElement);
+                moduloElement.appendChild(moduloIzenaElement);
+                moduloElement.appendChild(moduloOrduakElement);
+
+                var ikasleakElement = newXmlDoc.createElement('ikasleak');
+                var ikasleElement = newXmlDoc.createElement('ikasle');
+                var notaElement = newXmlDoc.createElement('nota');
+                notaElement.textContent = notaInputValue;
+                var faltakElement = newXmlDoc.createElement('faltak');
+                faltakElement.textContent = faltakInputValue;
+
+                ikasleElement.appendChild(notaElement);
+                ikasleElement.appendChild(faltakElement);
+
+                ikasleakElement.appendChild(ikasleElement);
+
+                moduloElement.appendChild(ikasleakElement);
+
+                newXmlDoc.documentElement.appendChild(moduloElement);
+
+                var xmlString = new XMLSerializer().serializeToString(newXmlDoc);
+
+                // Append the new XML data to the existing data
+                if (ebaluazioaXML) {
+                    ebaluazioaXML += xmlString;
+                } else {
+                    ebaluazioaXML = xmlString;
+                }
+
+                console.log(ebaluazioaXML);
+            }
+        }
+
+    function downloadEbaluazioa() {
+        if (!ebaluazioaXML) {
+            console.error("No Ebaluazioa data available to download.");
+            return;
+        }
+
+        var blob = new Blob([ebaluazioaXML], { type: 'application/xml' });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Ebaluazioa.xml';
+        link.click();
+    }
+</script>
+</body>
+
+</html>
+

@@ -1,0 +1,308 @@
+.Horizontal {
+	position:relative;
+	display:inline-block;
+	margin:0;
+	padding-top: 1%;
+}
+.Menu {
+	background-color: #FFD733;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.Submenu {
+	display: none;
+	position: absolute;
+	background-color: #C7C7C7;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+	border-radius: 4px;
+}
+.Submenu a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+a {
+	color: white;
+	text-decoration: none;
+}
+.Horizontal:hover .Submenu {
+	display:block;
+}
+.Menu:hover {
+	background-color: #FFE05F;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.Submenu a:hover {
+	background-color: #D2D2D2;
+	border-radius: 4px;
+}
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+
+}
+.Top{
+	background-color:#565656;
+	color: #FFFFFF;
+	padding-bottom: 90px;
+}
+body {
+	margin:0;
+}
+.CR7 {
+	background-color: Black;
+	padding-bottom: 10px;
+}
+.Sareak {
+	background-color: #000000;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding:0;
+	padding-bottom: 2px;
+}
+.Txikia {
+	width: 4%;
+	height: 50%;
+	float: left;
+	margin-right: 10px;
+}
+.SareSozialak {
+	margin: 0;
+}
+.logo {
+	width :70px;
+	height: 70px;
+	margin: 10px;
+	padding:0;
+	float: right;
+	
+}
+.logo:hover {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.titulo {
+	float:left;
+	margin-left: 20px;
+	border: 2px solid #FFCF6A;
+	border-radius: 12px;
+	padding: 3px;
+	background-color: #FFCD25;
+	color: black;
+}
+.Sozial {
+	list-style-type: none;
+	color: white;
+	margin:0;
+}
+.ZikloTitulo {
+	color: #FFD733;
+	margin-top: 2px;
+	display: inline-block;
+}
+.ZikloTextua {
+	border: 2px solid #FFCF6A;
+	width: 50%;
+	float: left;
+}
+.ZikloLista {
+	float: right;
+	margin-right: 10%;
+	margin-bottom:0;
+}
+.ZikloEzagutu {
+	Float: right;
+}
+.ZikloBotoia {
+	background-color: #FFD733;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
+	margin-left:10px;
+	margin-right:10px;
+	box-shadow: 0 9px #999;
+}
+.ZikloBotoia:hover {
+	background-color: #FFE05F;
+	box-shadow: 0 9px #999;
+}
+.ZikloBotoia:active {
+	background-color: #FFE05F;
+	box-shadow: 0 5px #666;
+	transform: translateY(10px);
+}
+.Txikia:active {
+	transform: translateY(10px)
+}
+video {
+	width: 30%;
+	height: 50%;
+	border:2px solid #FFCF6A;
+	margin-top: 10px;
+	background-color:#FFCD25;
+}
+.ZikloVideo {
+	margin-left: 10px;
+}
+.Copy {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	color: white;
+}
+.container {
+    max-width: 600px;
+    margin: 2px auto;
+	background-color:#565656;
+    padding: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+	color: white;
+}
+#studentTable {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+#studentTable th, #studentTable td {
+	border: 1px solid black;
+	padding: 8px;
+	text-align: left;
+}
+form {
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 0;
+	display: inline-block;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Add margin-bottom for spacing between input elements */
+}
+
+/* Style the submit button */
+input[type="submit"] {
+    background-color: #FFD700; /* Orange-Yellow color */
+    color: #000; /* Black text color */
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #FFC800; /* Darker shade of orange-yellow on hover */
+}
+
+/* Adjust margin-right for radio buttons */
+input[type="radio"] {
+    margin-right: 3px;
+    display: inline-block;
+}
+
+/* Style the dropdown (select) element */
+select {
+    width: 100%;
+	padding: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Add margin-bottom for spacing between input elements */
+	border-radius: 4px;
+}
+option {
+	width: 100%;
+	padding: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Add margin-bottom for spacing between input elements */
+	border-radius: 4px;
+}
+
+/* Style the date input */
+input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Add margin-bottom for spacing between input elements */
+}
+
+/* Style the email input */
+input[type="email"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Add margin-bottom for spacing between input elements */
+}
+
+.IkasleTop {
+	display: inline-block;
+	 float: left;
+	 background-color: ;
+}
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+        input[type="button"] {
+            background-color: #ffcc00; /* Yellow background color for buttons */
+            color: white; /* White text color for buttons */
+            cursor: pointer;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+.IF {
+	height: 73vh;
+	width: 100%;
+	position: relative;
+}
+
+body::-webkit-scrollbar {
+	width: 0;
+}
